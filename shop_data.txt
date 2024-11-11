@@ -1,0 +1,12 @@
+Product Catalog:
+1,Laptop,1000.0
+2,Phone,500.0
+3,Headphones,100.0
+4,Mouse,20.0
+5,Charger,150.0
+
+Product Inventory:
+1,9
+2,19
+3,30
+4,300
