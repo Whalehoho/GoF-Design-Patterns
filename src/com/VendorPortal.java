@@ -6,16 +6,19 @@ import java.util.Scanner;
 import com.datastructureutils.*;
 import com.ecommerceutils.Product;
 
-public class Vendor {
+public class VendorPortal {
+
+    private static BinarySearchTree<Product> productCatalog;
+    private static HashMap<Integer, Integer> productInventory;
 
     public static void main(String[] args) {
         // Initialize the custom data structures
-        BinarySearchTree<Product> productCatalog = new BinarySearchTree<>();
-        HashMap<Integer, Integer> productInventory = new HashMap<>();
+        productCatalog = new BinarySearchTree<>();
+        productInventory = new HashMap<>();
 
         // Read the product catalog and inventory data from the text file
         try {
-            loadDataFromFile(productCatalog, productInventory);
+            loadDataFromFile();
             System.out.println("Catalog and inventory data loaded from file.");
         } catch (IOException e) {
             System.out.println("Error loading data from file: " + e.getMessage());
@@ -57,7 +60,7 @@ public class Vendor {
                     break;
                 case 3:
                     try {
-                        saveDataToFile(productCatalog, productInventory);
+                        saveDataToFile();
                         System.out.println("Catalog and inventory data saved to file.");
                     } catch (IOException e) {
                         System.out.println("Error saving data to file: " + e.getMessage());
@@ -81,7 +84,7 @@ public class Vendor {
     }
 
     // Method to read product catalog and inventory data from the file
-    private static void loadDataFromFile(BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory) throws IOException {
+    private static void loadDataFromFile() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader("shop_data.txt"))) {
             String line;
             boolean readingInventory = false;
@@ -127,7 +130,7 @@ public class Vendor {
     }
 
     // Method to save catalog and inventory data to a file
-    private static void saveDataToFile(BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory) throws IOException {
+    private static void saveDataToFile() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("shop_data.txt"))) {
             // Save product catalog (we use an in-order traversal for the Binary Search Tree)
             writer.write("Product Catalog:\n");

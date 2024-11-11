@@ -8,22 +8,29 @@ import com.datastructureutils.*;
 import com.ecommerceutils.Order;
 import com.ecommerceutils.Product;
 
-public class BuyerSelfCheckout {
+public class BuyerSelfCheckoutPortal {
+
+    private static LinkedList<Product> shoppingCart = new LinkedList<>();
+    private static Stack<String> userActions = new Stack<>();
+    private static PriorityQueue<Order> orderQueue = new PriorityQueue<>();
+    private static HashMap<Integer, Integer> productInventory = new HashMap<>();
+    private static Trie productSearchTrie = new Trie();
+    private static BinarySearchTree<Product> productCatalog = new BinarySearchTree<>();
 
     public static void main(String[] args) {
         // Initialize the custom data structures
-        LinkedList<Product> shoppingCart = new LinkedList<>();
-        Stack<String> userActions = new Stack<>();
-        PriorityQueue<Order> orderQueue = new PriorityQueue<>();
-        HashMap<Integer, Integer> productInventory = new HashMap<>(); // Inventory of products
-        Trie productTrie = new Trie(); // Trie for product search
+        shoppingCart = new LinkedList<>();
+        userActions = new Stack<>();
+        orderQueue = new PriorityQueue<>();
+        productInventory = new HashMap<>(); // Inventory of products
+        productSearchTrie = new Trie(); // Trie for product search
 
         // Initialize product catalog (Binary Search Tree)
-        BinarySearchTree<Product> productCatalog = new BinarySearchTree<>();
+        productCatalog = new BinarySearchTree<>();
 
         // Read the product catalog and inventory data from the text file
         try {
-            loadDataFromFile(productCatalog, productInventory, productTrie);
+            loadDataFromFile();
             System.out.println("Catalog and inventory data loaded from file.");
         } catch (IOException e) {
             System.out.println("Error loading data from file: " + e.getMessage());
@@ -71,7 +78,7 @@ public class BuyerSelfCheckout {
                     scanner.nextLine(); // Consume newline
                     String productName = scanner.nextLine();
                     System.out.println("Search Results:");
-                        List<String> results = productTrie.getWordsWithPrefix(productName);
+                        List<String> results = productSearchTrie.getWordsWithPrefix(productName);
                         for (String result : results) {
                             System.out.println(result);
                         }
@@ -86,7 +93,7 @@ public class BuyerSelfCheckout {
 
         // Update the text file with the new inventory after processing the orders
         try {
-            updateInventoryInFile(productCatalog, productInventory);
+            updateInventoryInFile();
         } catch (IOException e) {
             System.out.println("Error updating inventory in file: " + e.getMessage());
         }
@@ -95,7 +102,7 @@ public class BuyerSelfCheckout {
     }
 
     // Method to read product catalog and inventory data from the file
-    private static void loadDataFromFile(BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory, Trie productTrie) throws IOException {
+    private static void loadDataFromFile() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader("shop_data.txt"))) {
             String line;
             boolean readingInventory = false;
@@ -117,7 +124,7 @@ public class BuyerSelfCheckout {
                         double price = Double.parseDouble(parts[2].trim());
                         Product product = new Product(id, name, price);
                         productCatalog.insert(product);
-                        productTrie.insert(name); // Insert product name into Trie
+                        productSearchTrie.insert(name); // Insert product name into Trie
                         System.out.println("Product ID: " + product.getId() + " - "+ product.getName());
                     }
                 }
@@ -142,7 +149,7 @@ public class BuyerSelfCheckout {
     }
 
     // Method to update the product inventory in the file after processing the orders
-    private static void updateInventoryInFile(BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory) throws IOException {
+    private static void updateInventoryInFile() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("shop_data.txt"))) {
             // Write the product catalog
             System.out.println("Updating product catalog and inventory in file...");
