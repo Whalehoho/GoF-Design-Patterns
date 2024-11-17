@@ -4,9 +4,11 @@ Product Catalog:
 3,Headphones,100.0
 4,Mouse,20.0
 5,Charger,150.0
+6,Pill,66.0
 
 Product Inventory:
-1,20
+1,17
 2,20
 3,29
 4,300
+6,0

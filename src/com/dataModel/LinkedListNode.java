@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 
 // This class will represent a node in the LinkedList.
 public class LinkedListNode<T> {

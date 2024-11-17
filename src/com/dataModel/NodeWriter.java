@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 import java.io.BufferedWriter;
 import java.io.IOException;
 

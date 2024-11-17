@@ -1,4 +1,4 @@
-package com.ecommerceutils;
+package com.dataModel;
 
 public class Product implements Comparable<Product> {
     private int id;

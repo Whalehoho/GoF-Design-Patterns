@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 
 import java.util.ArrayList;
 import java.util.List;

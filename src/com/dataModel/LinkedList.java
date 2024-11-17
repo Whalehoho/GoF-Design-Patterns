@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 
 public class LinkedList<T> {
 
@@ -77,5 +77,11 @@ public class LinkedList<T> {
     // Get the head of the list
     public LinkedListNode<T> getHead() {
         return head;
+    }
+
+    // Clear the list
+    public void clear() {
+        head = tail = null;
+        size = 0;
     }
 }

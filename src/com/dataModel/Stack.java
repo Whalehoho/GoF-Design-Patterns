@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 
 public class Stack<T> {
     private LinkedList<T> list;

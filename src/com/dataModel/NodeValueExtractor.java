@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 
 @FunctionalInterface
 public interface NodeValueExtractor<T> {

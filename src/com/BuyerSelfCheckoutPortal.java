@@ -2,17 +2,16 @@ package com;
 
 import java.io.*;
 import java.util.Scanner;
-import java.util.List;
 
-import com.datastructureutils.*;
-import com.ecommerceutils.Order;
-import com.ecommerceutils.Product;
+import com.dataModel.*;
+
+import java.util.List;
 
 public class BuyerSelfCheckoutPortal {
 
     private static LinkedList<Product> shoppingCart = new LinkedList<>();
     private static Stack<String> userActions = new Stack<>();
-    private static PriorityQueue<Order> orderQueue = new PriorityQueue<>();
+    private static HashMap<Integer, String> productNames = new HashMap<>();
     private static HashMap<Integer, Integer> productInventory = new HashMap<>();
     private static Trie productSearchTrie = new Trie();
     private static BinarySearchTree<Product> productCatalog = new BinarySearchTree<>();
@@ -21,7 +20,7 @@ public class BuyerSelfCheckoutPortal {
         // Initialize the custom data structures
         shoppingCart = new LinkedList<>();
         userActions = new Stack<>();
-        orderQueue = new PriorityQueue<>();
+        productNames = new HashMap<>();
         productInventory = new HashMap<>(); // Inventory of products
         productSearchTrie = new Trie(); // Trie for product search
 
@@ -41,20 +40,24 @@ public class BuyerSelfCheckoutPortal {
 
         while (!exit) {
             System.out.println("\nMenu:");
+            System.out.println("0. Show product catalog");
             System.out.println("1. Add product to cart");
             System.out.println("2. View shopping cart");
             System.out.println("3. Undo last action");
-            System.out.println("4. Process orders");
+            System.out.println("4. Checkout");
             System.out.println("5. Search for products by name");
             System.out.println("6. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    showProductCatalog();
+                    break;
                 case 1:
                     System.out.print("Enter product ID to add to cart: ");
                     int productId = scanner.nextInt();
-                    addProductToCart(productId, shoppingCart, userActions, productCatalog);
+                    addProductToCart(productId);
                     break;
                 case 2:
                     System.out.println("Shopping Cart:");
@@ -71,7 +74,7 @@ public class BuyerSelfCheckoutPortal {
                     }
                     break;
                 case 4:
-                    processOrders(shoppingCart, orderQueue, productCatalog, productInventory);
+                    checkout();
                     break;
                 case 5:
                     System.out.print("Enter product name to search: ");
@@ -91,22 +94,18 @@ public class BuyerSelfCheckoutPortal {
             }
         }
 
-        // Update the text file with the new inventory after processing the orders
-        try {
-            updateInventoryInFile();
-        } catch (IOException e) {
-            System.out.println("Error updating inventory in file: " + e.getMessage());
-        }
+        
 
         scanner.close();
     }
 
     // Method to read product catalog and inventory data from the file
     private static void loadDataFromFile() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader("shop_data.txt"))) {
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader("inventory.txt"))) {
             String line;
             boolean readingInventory = false;
-
+    
             // Read product catalog from the file
             System.out.println("Reading product catalog from file...");
             while ((line = reader.readLine()) != null) {
@@ -114,7 +113,7 @@ public class BuyerSelfCheckoutPortal {
                     readingInventory = true;
                     break;  // Stop when we hit the inventory section
                 }
-
+    
                 // Assuming product data format is: ID,Name,Price
                 if (!line.equals("Product Catalog:") && !line.trim().isEmpty()) {
                     String[] parts = line.split(",");
@@ -125,11 +124,11 @@ public class BuyerSelfCheckoutPortal {
                         Product product = new Product(id, name, price);
                         productCatalog.insert(product);
                         productSearchTrie.insert(name); // Insert product name into Trie
-                        System.out.println("Product ID: " + product.getId() + " - "+ product.getName());
+                        productNames.put(id, name); // Store product name for later use
                     }
                 }
             }
-
+    
             // Read product inventory from the file
             if (readingInventory) {
                 System.out.println("Reading product inventory from file...");
@@ -141,20 +140,35 @@ public class BuyerSelfCheckoutPortal {
                         int id = Integer.parseInt(parts[0].trim());
                         int quantity = Integer.parseInt(parts[1].trim());
                         productInventory.put(id, quantity);
-                        System.out.println("Product ID " + id + ": " + quantity + " units");
                     }
                 }
             }
         }
+    
+        
     }
+
+    // Method to show the product catalog
+    private static void showProductCatalog() {
+        // Print the catalog and inventory data as a table
+        System.out.println("\nCatalog and Inventory Data:");
+        System.out.printf("%-10s %-20s %-10s%n", "ID", "Name", "Inventory");
+        System.out.println("---------------------------------------------");
+        for (int id : productNames.keySet()) {
+            String name = productNames.get(id);
+            int inventory = productInventory.getOrDefault(id, 0);
+            System.out.printf("%-10d %-20s %-10d%n", id, name, inventory);
+        }
+    }
+
 
     // Method to update the product inventory in the file after processing the orders
     private static void updateInventoryInFile() throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("shop_data.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("inventory.txt"))) {
             // Write the product catalog
             System.out.println("Updating product catalog and inventory in file...");
             writer.write("Product Catalog:\n");
-            productCatalog.inOrderTraversal(writer, (product, bw) -> {
+            productCatalog.inOrderWriterTraversal(writer, (product, bw) -> {
                 if (product instanceof Product) {
                     Product p = (Product) product;
                     bw.write(p.getId() + "," + p.getName() + "," + p.getPrice() + "\n");
@@ -170,7 +184,7 @@ public class BuyerSelfCheckoutPortal {
     }
 
     // Simulate adding product to the shopping cart from the catalog
-    private static void addProductToCart(int productId, LinkedList<Product> shoppingCart, Stack<String> userActions, BinarySearchTree<Product> productCatalog) {
+    private static void addProductToCart(int productId) {
         Product product = productCatalog.search(productId, Product::getId);
         if (product != null) {
             shoppingCart.addFirst(product);
@@ -180,42 +194,50 @@ public class BuyerSelfCheckoutPortal {
         }
     }
 
-    // Method to process orders
-    private static void processOrders(LinkedList<Product> shoppingCart, PriorityQueue<Order> orderQueue, BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory) {
-        // Create orders for each product in the shopping cart, with the most recent product getting higher priority
-        int priority = 1;
+    // Method to checkout and process the shopping cart
+    private static void checkout() {
+        System.out.println("\nChecking out:");
         LinkedListNode<Product> currentNode = shoppingCart.getHead();
         while (currentNode != null) {
             Product product = currentNode.getValue();
-            Order order = new Order(priority, product.getId(), 1, priority); // Create an order with the current priority
-
-            // Add the order to the priority queue
-            orderQueue.enqueue(order);
-            priority++; // Decrease priority for the next product (lower priority)
-            currentNode = currentNode.getNext(); // Move to the next product
-        }
-
-        // Process the orders based on their priority
-        System.out.println("\nProcessing Orders:");
-        while (!orderQueue.isEmpty()) {
-            Order order = orderQueue.dequeue();
-            int productId = order.getProductId();
-            int quantity = order.getQuantity();
+            int productId = product.getId();
+            int quantity = 1; // Assuming 1 unit per product in the cart
 
             // Check if the product exists in the catalog and if there’s enough stock
             Product foundProduct = productCatalog.search(productId, Product::getId);
+            
+            // Check if the product id exists in the inventory
+            if (!productInventory.containsKey(productId)) {
+                System.out.println("Product ID " + productId + " not found in inventory.");
+                currentNode = currentNode.getNext();
+                continue;
+            }
 
             if (foundProduct != null) {
                 if (productInventory.get(productId) >= quantity) {
                     // Update the inventory
                     productInventory.put(productId, productInventory.get(productId) - quantity);
-                    System.out.println("Processed Order ID: " + order.getOrderId() + " for " + quantity + " units of " + foundProduct.getName());
+                    System.out.println("Checked out " + quantity + " unit(s) of " + foundProduct.getName());
                 } else {
-                    System.out.println("Insufficient stock for Order ID: " + order.getOrderId());
+                    System.out.println("Insufficient stock for " + foundProduct.getName());
                 }
             } else {
-                System.out.println("Product not found for Order ID: " + order.getOrderId());
+                System.out.println("Product not found: " + product.getName());
             }
+
+            currentNode = currentNode.getNext(); // Move to the next product
+        }
+
+        // Clear the shopping cart after checkout
+        shoppingCart.clear();
+        System.out.println("Checkout complete. Shopping cart is now empty.");
+
+        // Update the text file with the new inventory after processing the cart
+        try {
+            updateInventoryInFile();
+        } catch (IOException e) {
+            System.out.println("Error updating inventory in file: " + e.getMessage());
         }
     }
+
 }

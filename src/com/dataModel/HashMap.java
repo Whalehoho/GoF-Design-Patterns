@@ -1,4 +1,4 @@
-package com.datastructureutils;
+package com.dataModel;
 
 import java.util.LinkedList;
 import java.util.HashSet;
@@ -67,5 +67,17 @@ public class HashMap<K, V> {
             }
         }
         return keys;
+    }
+
+    public int getOrDefault(K key, int defaultValue) {
+        V value = get(key);
+        if (value == null) {
+            return defaultValue;
+        }
+        return (int) value;
+    }
+
+    public boolean containsKey(K key) {
+        return get(key) != null;
     }
 }
