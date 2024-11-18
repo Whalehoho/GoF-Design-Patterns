@@ -1,10 +1,10 @@
-package com.dataModel;
+package com.DataModel;
 
 import java.util.LinkedList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HashMap<K, V> {
+public class SimpleHashMap<K, V> {
     private class Entry {
         K key;
         V value;
@@ -19,7 +19,7 @@ public class HashMap<K, V> {
     private static final int SIZE = 16;
 
     @SuppressWarnings("unchecked")
-    public HashMap() {
+    public SimpleHashMap() {
         table = new LinkedList[SIZE];
         for (int i = 0; i < SIZE; i++) {
             table[i] = new LinkedList<>();

@@ -1,19 +1,19 @@
 package com.Command;
 
-import com.dataModel.HashMap;
-import com.dataModel.Stack;
+import com.DataModel.SimpleHashMap;
+import com.DataModel.SimpleStack;
 
 public class UpdateProductInventoryCommand implements Command {
-    private HashMap<Integer, Integer> productInventory;
+    private SimpleHashMap<Integer, Integer> productInventory;
     private int productId;
     private int newInventory;
-    private Stack<Integer> inventoryHistory;
+    private SimpleStack<Integer> inventoryHistory;
 
-    public UpdateProductInventoryCommand(HashMap<Integer, Integer> productInventory, int productId, int newInventory) {
+    public UpdateProductInventoryCommand(SimpleHashMap<Integer, Integer> productInventory, int productId, int newInventory) {
         this.productInventory = productInventory;
         this.productId = productId;
         this.newInventory = newInventory;
-        this.inventoryHistory = new Stack<>();
+        this.inventoryHistory = new SimpleStack<>();
     }
 
     @Override

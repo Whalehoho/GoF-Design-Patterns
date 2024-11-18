@@ -1,10 +1,10 @@
-package com.dataModel;
+package com.DataModel;
 
-public class Stack<T> {
-    private LinkedList<T> list;
+public class SimpleStack<T> {
+    private SimpleLinkedList<T> list;
 
-    public Stack() {
-        list = new LinkedList<>();
+    public SimpleStack() {
+        list = new SimpleLinkedList<>();
     }
 
     public void push(T item) {

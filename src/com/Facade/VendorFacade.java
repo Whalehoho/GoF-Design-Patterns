@@ -1,30 +1,29 @@
 package com.Facade;
 
-import com.dataModel.BinarySearchTree;
-import com.dataModel.Product;
-import com.dataModel.HashMap;
-import com.dataModel.Stack;
 import com.Command.Command;
 import com.Command.ShowProductCatalogCommand;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 import com.Command.AddNewProductCommand;
 import com.Command.UpdateProductInventoryCommand;
+import com.DataModel.SimpleBinarySearchTree;
+import com.DataModel.SimpleHashMap;
+import com.DataModel.Product;
+import com.DataModel.SimpleStack;
 import com.Command.SaveFileCommand;
 
 public class VendorFacade {
-    private BinarySearchTree<Product> productCatalog;
-    private HashMap<Integer, Integer> productInventory;
-    private Stack<Command> commandHistory;
+    private SimpleBinarySearchTree<Product> productCatalog;
+    private SimpleHashMap<Integer, Integer> productInventory;
+    private SimpleStack<Command> commandHistory;
 
     public VendorFacade() {
-        productCatalog = new BinarySearchTree<>();
-        productInventory = new HashMap<>();
-        commandHistory = new Stack<>();
+        productCatalog = new SimpleBinarySearchTree<>();
+        productInventory = new SimpleHashMap<>();
+        commandHistory = new SimpleStack<>();
         try {
             loadFile();
             System.out.println("Catalog and inventory data loaded from file.");
@@ -90,7 +89,7 @@ public class VendorFacade {
     }
 
     private void loadFile() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader("inventory.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("inventory.csv"))) {
             String line;
             boolean readingInventory = false;
             // Read product catalog from the file

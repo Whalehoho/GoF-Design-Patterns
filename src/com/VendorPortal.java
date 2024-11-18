@@ -38,7 +38,7 @@ public class VendorPortal {
                     String name = scanner.nextLine();
                     System.out.print("Enter product price: ");
                     double price = scanner.nextDouble();
-                    vendorFacade.addNewProduct(id, name, price);
+                    vendorFacade.addNewProduct(id, name, price); // Call to the facade
                     System.out.println("Product added to catalog.");
                     break;
                 case 2:
@@ -46,15 +46,15 @@ public class VendorPortal {
                     int productId = scanner.nextInt();
                     System.out.print("Enter new inventory quantity: ");
                     int quantity = scanner.nextInt();
-                    vendorFacade.updateProductInventory(productId, quantity);
+                    vendorFacade.updateProductInventory(productId, quantity); // Call to the facade
                     System.out.println("Product inventory updated.");
                     break;
                 case 3:
-                    vendorFacade.saveFile();
+                    vendorFacade.saveFile(); // Call to the facade
                     System.out.println("Catalog and inventory data saved to file.");
                     break;
                 case 4:
-                    vendorFacade.undoLastAction();
+                    vendorFacade.undoLastAction(); // Call to the facade
                     break;
                 case 5:
                     exit = true;

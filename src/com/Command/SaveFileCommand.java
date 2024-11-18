@@ -1,22 +1,23 @@
 package com.Command;
 
-import com.dataModel.BinarySearchTree;
-import com.dataModel.HashMap;
-import com.dataModel.Product;
 import java.io.*;
 
-public class SaveFileCommand implements Command {
-    private BinarySearchTree<Product> productCatalog;
-    private HashMap<Integer, Integer> productInventory;
+import com.DataModel.SimpleBinarySearchTree;
+import com.DataModel.SimpleHashMap;
+import com.DataModel.Product;
 
-    public SaveFileCommand(BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory) {
+public class SaveFileCommand implements Command {
+    private SimpleBinarySearchTree<Product> productCatalog;
+    private SimpleHashMap<Integer, Integer> productInventory;
+
+    public SaveFileCommand(SimpleBinarySearchTree<Product> productCatalog, SimpleHashMap<Integer, Integer> productInventory) {
         this.productCatalog = productCatalog;
         this.productInventory = productInventory;
     }
 
     @Override
     public void execute() throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("inventory.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("inventory.csv"))) {
             // Save product catalog (we use an in-order traversal for the Binary Search Tree)
             System.out.println("Updating product catalog and inventory in file...");
             writer.write("Product Catalog:\n");

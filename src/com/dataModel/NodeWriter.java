@@ -1,4 +1,4 @@
-package com.dataModel;
+package com.DataModel;
 import java.io.BufferedWriter;
 import java.io.IOException;
 

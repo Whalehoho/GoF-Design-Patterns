@@ -1,12 +1,12 @@
-package com.dataModel;
+package com.DataModel;
 
-public class LinkedList<T> {
+public class SimpleLinkedList<T> {
 
     private LinkedListNode<T> head;
     private LinkedListNode<T> tail;
     private int size;
 
-    public LinkedList() {
+    public SimpleLinkedList() {
         this.head = null;
         this.tail = null;
         this.size = 0;

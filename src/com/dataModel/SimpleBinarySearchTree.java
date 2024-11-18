@@ -1,9 +1,9 @@
-package com.dataModel;
+package com.DataModel;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class BinarySearchTree<T extends Comparable<T>> {
+public class SimpleBinarySearchTree<T extends Comparable<T>> {
     private class Node {
         T value;
         Node left;
@@ -18,7 +18,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     private Node root;
 
-    public BinarySearchTree() {
+    public SimpleBinarySearchTree() {
         this.root = null;
     }
 

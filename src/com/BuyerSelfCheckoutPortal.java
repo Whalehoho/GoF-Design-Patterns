@@ -3,29 +3,29 @@ package com;
 import java.io.*;
 import java.util.Scanner;
 
-import com.dataModel.*;
+import com.DataModel.*;
 
 import java.util.List;
 
 public class BuyerSelfCheckoutPortal {
 
-    private static LinkedList<Product> shoppingCart = new LinkedList<>();
-    private static Stack<String> userActions = new Stack<>();
-    private static HashMap<Integer, String> productNames = new HashMap<>();
-    private static HashMap<Integer, Integer> productInventory = new HashMap<>();
-    private static Trie productSearchTrie = new Trie();
-    private static BinarySearchTree<Product> productCatalog = new BinarySearchTree<>();
+    private static SimpleLinkedList<Product> shoppingCart = new SimpleLinkedList<>();
+    private static SimpleStack<String> userActions = new SimpleStack<>();
+    private static SimpleHashMap<Integer, String> productNames = new SimpleHashMap<>();
+    private static SimpleHashMap<Integer, Integer> productInventory = new SimpleHashMap<>();
+    private static SimpleTrie productSearchTrie = new SimpleTrie();
+    private static SimpleBinarySearchTree<Product> productCatalog = new SimpleBinarySearchTree<>();
 
     public static void main(String[] args) {
         // Initialize the custom data structures
-        shoppingCart = new LinkedList<>();
-        userActions = new Stack<>();
-        productNames = new HashMap<>();
-        productInventory = new HashMap<>(); // Inventory of products
-        productSearchTrie = new Trie(); // Trie for product search
+        shoppingCart = new SimpleLinkedList<>();
+        userActions = new SimpleStack<>();
+        productNames = new SimpleHashMap<>();
+        productInventory = new SimpleHashMap<>(); // Inventory of products
+        productSearchTrie = new SimpleTrie(); // Trie for product search
 
         // Initialize product catalog (Binary Search Tree)
-        productCatalog = new BinarySearchTree<>();
+        productCatalog = new SimpleBinarySearchTree<>();
 
         // Read the product catalog and inventory data from the text file
         try {
@@ -102,7 +102,7 @@ public class BuyerSelfCheckoutPortal {
     // Method to read product catalog and inventory data from the file
     private static void loadDataFromFile() throws IOException {
     
-        try (BufferedReader reader = new BufferedReader(new FileReader("inventory.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("inventory.csv"))) {
             String line;
             boolean readingInventory = false;
     
@@ -164,7 +164,7 @@ public class BuyerSelfCheckoutPortal {
 
     // Method to update the product inventory in the file after processing the orders
     private static void updateInventoryInFile() throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("inventory.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("inventory.csv"))) {
             // Write the product catalog
             System.out.println("Updating product catalog and inventory in file...");
             writer.write("Product Catalog:\n");

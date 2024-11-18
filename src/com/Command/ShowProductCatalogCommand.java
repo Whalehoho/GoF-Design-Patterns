@@ -1,14 +1,14 @@
 package com.Command;
 
-import com.dataModel.BinarySearchTree;
-import com.dataModel.HashMap;
-import com.dataModel.Product;
+import com.DataModel.SimpleBinarySearchTree;
+import com.DataModel.SimpleHashMap;
+import com.DataModel.Product;
 
 public class ShowProductCatalogCommand implements Command {
-    private BinarySearchTree<Product> productCatalog;
-    private HashMap<Integer, Integer> productInventory;
+    private SimpleBinarySearchTree<Product> productCatalog;
+    private SimpleHashMap<Integer, Integer> productInventory;
 
-    public ShowProductCatalogCommand(BinarySearchTree<Product> productCatalog, HashMap<Integer, Integer> productInventory) {
+    public ShowProductCatalogCommand(SimpleBinarySearchTree<Product> productCatalog, SimpleHashMap<Integer, Integer> productInventory) {
         this.productCatalog = productCatalog;
         this.productInventory = productInventory;
     }

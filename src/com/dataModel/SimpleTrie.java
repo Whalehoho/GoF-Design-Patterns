@@ -1,22 +1,22 @@
-package com.dataModel;
+package com.DataModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trie {
+public class SimpleTrie {
     private class TrieNode {
-        HashMap<Character, TrieNode> children;
+        SimpleHashMap<Character, TrieNode> children;
         boolean isEndOfWord;
 
         TrieNode() {
-            children = new HashMap<>();
+            children = new SimpleHashMap<>();
             isEndOfWord = false;
         }
     }
 
     private TrieNode root;
 
-    public Trie() {
+    public SimpleTrie() {
         root = new TrieNode();
     }
 
