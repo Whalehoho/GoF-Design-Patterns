@@ -1,4 +1,4 @@
-package com.DataModel;
+package com.DataModels;
 
 public class SimpleStack<T> {
     private SimpleLinkedList<T> list;
@@ -21,5 +21,9 @@ public class SimpleStack<T> {
 
     public boolean isEmpty() {
         return list.isEmpty();
+    }
+
+    public void clear() {
+        list.clear();
     }
 }

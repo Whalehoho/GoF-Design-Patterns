@@ -1,4 +1,4 @@
-package com.DataModel;
+package com.DataModels;
 
 // This class will represent a node in the LinkedList.
 public class LinkedListNode<T> {

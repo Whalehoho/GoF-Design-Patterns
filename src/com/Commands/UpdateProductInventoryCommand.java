@@ -1,7 +1,7 @@
-package com.Command;
+package com.Commands;
 
-import com.DataModel.SimpleHashMap;
-import com.DataModel.SimpleStack;
+import com.DataModels.SimpleHashMap;
+import com.DataModels.SimpleStack;
 
 public class UpdateProductInventoryCommand implements Command {
     private SimpleHashMap<Integer, Integer> productInventory;

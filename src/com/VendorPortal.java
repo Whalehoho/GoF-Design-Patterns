@@ -2,7 +2,7 @@ package com;
 
 import java.util.Scanner;
 
-import com.Facade.VendorFacade;
+import com.Facades.VendorFacade;
 
 public class VendorPortal {
 

@@ -5,6 +5,8 @@ Product Catalog:
 4,Mouse,20.0
 5,Charger,150.0
 6,Pill,66.0
+7,Hair Dryer,160.0
+8,Hard Drive,80.0
 
 Product Inventory:
 1,17
@@ -13,3 +15,4 @@ Product Inventory:
 4,300
 5,100
 6,0
+7,50

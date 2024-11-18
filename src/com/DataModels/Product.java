@@ -1,4 +1,4 @@
-package com.DataModel;
+package com.DataModels;
 
 public class Product implements Comparable<Product> {
     private int id;

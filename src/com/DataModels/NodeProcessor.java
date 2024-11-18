@@ -1,4 +1,4 @@
-package com.DataModel;
+package com.DataModels;
 
 @FunctionalInterface
 public interface NodeProcessor<T> {

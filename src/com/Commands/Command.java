@@ -1,4 +1,4 @@
-package com.Command;
+package com.Commands;
 
 import java.io.IOException;
 

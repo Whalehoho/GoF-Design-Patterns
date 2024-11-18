@@ -1,4 +1,4 @@
-package com.DataModel;
+package com.DataModels;
 
 public class SimpleLinkedList<T> {
 

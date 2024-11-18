@@ -1,10 +1,10 @@
-package com.Command;
+package com.Commands;
 
 import java.io.*;
 
-import com.DataModel.Product;
-import com.DataModel.SimpleBinarySearchTree;
-import com.DataModel.SimpleHashMap;
+import com.DataModels.Product;
+import com.DataModels.SimpleBinarySearchTree;
+import com.DataModels.SimpleHashMap;
 
 public class SaveFileCommand implements Command {
     private SimpleBinarySearchTree<Product> productCatalog;

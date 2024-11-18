@@ -1,19 +1,18 @@
-package com.Facade;
-
-import com.Command.Command;
-import com.Command.ShowProductCatalogCommand;
+package com.Facades;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.Command.AddNewProductCommand;
-import com.Command.UpdateProductInventoryCommand;
-import com.DataModel.Product;
-import com.DataModel.SimpleBinarySearchTree;
-import com.DataModel.SimpleHashMap;
-import com.DataModel.SimpleStack;
-import com.Command.SaveFileCommand;
+import com.Commands.Command;
+import com.Commands.AddNewProductCommand;
+import com.Commands.SaveFileCommand;
+import com.Commands.ShowProductCatalogCommand;
+import com.Commands.UpdateProductInventoryCommand;
+import com.DataModels.Product;
+import com.DataModels.SimpleBinarySearchTree;
+import com.DataModels.SimpleHashMap;
+import com.DataModels.SimpleStack;
 
 public class VendorFacade {
     private SimpleBinarySearchTree<Product> productCatalog;

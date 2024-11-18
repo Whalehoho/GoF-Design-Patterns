@@ -1,4 +1,4 @@
-package com.DataModel;
+package com.DataModels;
 
 import java.util.LinkedList;
 import java.util.HashSet;
