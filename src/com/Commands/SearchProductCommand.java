@@ -5,17 +5,17 @@ import com.DataModels.SimpleTrie;
 
 public class SearchProductCommand implements Command {
     private SimpleTrie productSearchTrie;
-    private String input;
+    private String query;
 
     public SearchProductCommand(SimpleTrie productSearchTrie, String input) {
         this.productSearchTrie = productSearchTrie;
-        this.input = input;
+        this.query = input;
     }
 
     @Override
     public void execute() {
-        System.out.println("Searching for products with prefix <" + input +">...");
-        List<String> results = productSearchTrie.getWordsWithPrefix(input);
+        System.out.println("Searching for products with prefix <" + query +">...");
+        List<String> results = productSearchTrie.getWordsWithPrefix(query);
         if(results.isEmpty()){
             System.out.println("No products found.");
             return;
