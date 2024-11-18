@@ -2,9 +2,9 @@ package com.Command;
 
 import java.io.*;
 
+import com.DataModel.Product;
 import com.DataModel.SimpleBinarySearchTree;
 import com.DataModel.SimpleHashMap;
-import com.DataModel.Product;
 
 public class SaveFileCommand implements Command {
     private SimpleBinarySearchTree<Product> productCatalog;

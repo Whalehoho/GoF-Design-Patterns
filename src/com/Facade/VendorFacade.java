@@ -9,9 +9,9 @@ import java.io.IOException;
 
 import com.Command.AddNewProductCommand;
 import com.Command.UpdateProductInventoryCommand;
+import com.DataModel.Product;
 import com.DataModel.SimpleBinarySearchTree;
 import com.DataModel.SimpleHashMap;
-import com.DataModel.Product;
 import com.DataModel.SimpleStack;
 import com.Command.SaveFileCommand;
 

@@ -1,7 +1,7 @@
 package com.Command;
 
-import com.DataModel.SimpleBinarySearchTree;
 import com.DataModel.Product;
+import com.DataModel.SimpleBinarySearchTree;
 
 public class AddNewProductCommand implements Command {
     private SimpleBinarySearchTree<Product> productCatalog;

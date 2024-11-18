@@ -1,8 +1,8 @@
 package com.Command;
 
+import com.DataModel.Product;
 import com.DataModel.SimpleBinarySearchTree;
 import com.DataModel.SimpleHashMap;
-import com.DataModel.Product;
 
 public class ShowProductCatalogCommand implements Command {
     private SimpleBinarySearchTree<Product> productCatalog;
